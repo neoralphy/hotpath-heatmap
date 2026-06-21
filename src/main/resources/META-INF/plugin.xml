@@ -1,16 +1,27 @@
 <idea-plugin>
     <id>com.hotpath.heatmap</id>
     <name>Hot Path Heatmap</name>
-    <vendor email="pelyhearon@gmail.com">hotpath</vendor>
+    <vendor email="pelyhearon@gmail.com" url="https://github.com/neoralphy">neoralphy</vendor>
 
     <description><![CDATA[
-        <p><b>Static hot path heatmap for PHP.</b></p>
+        <p><b>Static hot path heatmap for PHP and JavaScript/TypeScript.</b></p>
         <p>Highlights method call sites that may trigger expensive downstream execution paths
         — deep call chains, nested loops, repository / HTTP-client access, high fan-out — by
-        statically composing cached method summaries from PhpStorm's PSI and indexes.</p>
-        <p>This is a static estimate, not a runtime profiler. It exists to give an early visual
-        warning: <i>"this innocent-looking line may be expensive."</i></p>
+        statically composing cached method summaries from the IDE's PSI and indexes.</p>
+        <p>Each flagged call gets a severity-colored outline, a cost score in the gutter, and a
+        tooltip explaining <i>why</i>. This is a static estimate, not a runtime profiler — it
+        exists to give an early visual warning: <i>"this innocent-looking line may be expensive."</i></p>
     ]]></description>
+
+    <change-notes><![CDATA[
+        <b>0.1.0</b>
+        <ul>
+          <li>Initial release.</li>
+          <li>Static hot-path heatmap for PHP and JavaScript/TypeScript.</li>
+          <li>Severity-colored marker, gutter cost score, and an explanatory tooltip.</li>
+          <li>Configurable heuristics, traversal limits, and vendor/test exclusion.</li>
+        </ul>
+    ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>com.jetbrains.php</depends>
