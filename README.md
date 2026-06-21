@@ -66,3 +66,9 @@ architecture and the performance rules.
 
 Out of scope (for now): runtime/Xdebug profiling, DB query parsing, framework magic
 (Laravel/Symfony), precise dynamic-dispatch resolution.
+
+## License
+
+Proprietary — © 2026 Aron Pelyhe, all rights reserved. The source is available for viewing and
+evaluation only; it may not be used, copied, modified, or redistributed without written
+permission. See [LICENSE](LICENSE).
