@@ -1,0 +1,13 @@
+.gradle/
+build/
+out/
+*.iml
+.idea/
+.kotlin/
+.intellijPlatform/
+.serena/
+
+# Per-developer Claude Code settings (CLAUDE.md is committed; this isn't).
+.claude/settings.local.json
+
+# Keep the Gradle wrapper jar tracked, ignore everything else transient.

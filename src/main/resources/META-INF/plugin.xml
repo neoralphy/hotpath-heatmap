@@ -1,0 +1,42 @@
+<idea-plugin>
+    <id>com.hotpath.heatmap</id>
+    <name>Hot Path Heatmap</name>
+    <vendor email="pelyhearon@gmail.com">hotpath</vendor>
+
+    <description><![CDATA[
+        <p><b>Static hot path heatmap for PHP.</b></p>
+        <p>Highlights method call sites that may trigger expensive downstream execution paths
+        — deep call chains, nested loops, repository / HTTP-client access, high fan-out — by
+        statically composing cached method summaries from PhpStorm's PSI and indexes.</p>
+        <p>This is a static estimate, not a runtime profiler. It exists to give an early visual
+        warning: <i>"this innocent-looking line may be expensive."</i></p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.jetbrains.php</depends>
+    <depends>JavaScript</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <externalAnnotator
+            language="PHP"
+            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+        <externalAnnotator
+            language="JavaScript"
+            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+        <externalAnnotator
+            language="TypeScript"
+            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+
+        <projectService
+            serviceImplementation="com.hotpath.heatmap.analysis.MethodSummaryService"/>
+
+        <applicationService
+            serviceImplementation="com.hotpath.heatmap.settings.HotPathSettings"/>
+
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.hotpath.heatmap.settings.HotPathConfigurable"
+            id="com.hotpath.heatmap.settings"
+            displayName="Hot Path Heatmap"/>
+    </extensions>
+</idea-plugin>
