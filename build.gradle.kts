@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.hotpath"
-version = "0.1.1"
+version = "0.1.2"
 
 repositories {
     mavenCentral()
@@ -41,14 +41,19 @@ intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "242"
-            untilBuild = "243.*"
+            // Widen compatibility through the 2025.3 (253) line. A real branch wildcard is
+            // required — an empty value is rejected by the verifier/Marketplace, and leaving
+            // this unset would let Gradle auto-cap it at "242.*".
+            untilBuild = "253.*"
         }
     }
 
     pluginVerification {
         ides {
-            // Reuse the PhpStorm build we already compile against (no extra download).
+            // The build we compile against (no extra download).
             ide(IntelliJPlatformType.PhpStorm, "2024.2.4")
+            // The newer line we now claim compatibility with (downloads ~1 GB on first run).
+            ide(IntelliJPlatformType.PhpStorm, "2025.3")
         }
     }
 }
