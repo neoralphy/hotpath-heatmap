@@ -41,10 +41,11 @@ intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "242"
-            // Widen compatibility through the 2025.3 (253) line. A real branch wildcard is
-            // required — an empty value is rejected by the verifier/Marketplace, and leaving
-            // this unset would let Gradle auto-cap it at "242.*".
-            untilBuild = "253.*"
+            // No upper bound: a provider yielding null *omits* the until-build attribute
+            // entirely, so the plugin installs on 2024.2 and every future build. (An empty
+            // string would instead write an invalid `until-build=""`, and leaving this unset
+            // would let Gradle auto-cap it at "242.*".)
+            untilBuild = provider { null }
         }
     }
 

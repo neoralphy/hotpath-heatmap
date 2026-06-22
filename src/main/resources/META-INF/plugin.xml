@@ -16,8 +16,9 @@
     <change-notes><![CDATA[
         <b>0.1.2</b>
         <ul>
-          <li>Extended IDE compatibility through the 2025.3 (253) line so the plugin
-              installs on newer PhpStorm builds.</li>
+          <li>Removed the upper IDE-compatibility bound so the plugin installs on
+              2024.2 and all future PhpStorm builds. Verified compatible against the
+              2024.2 and 2025.3 (253) lines.</li>
         </ul>
         <b>0.1.1</b>
         <ul>
