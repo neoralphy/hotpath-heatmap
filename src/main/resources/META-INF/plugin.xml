@@ -5,7 +5,12 @@
 
     <description><![CDATA[
         <p><b>Static hot path heatmap for PHP and JavaScript/TypeScript.</b></p>
-        <p>Highlights method call sites that may trigger expensive downstream execution paths
+        <p><b>Why?</b> In source, every call reads as equally cheap: <code>$user-&gt;getId()</code>
+        looks exactly like <code>$user-&gt;calculateTheMeaningOfLife()</code> — yet one is a trivial
+        field access and the other may fan out through services, loops, and a repository. Hot Path
+        Heatmap was built to make that difference <i>visible at a glance</i>, so you notice the
+        expensive call before it becomes a production problem.</p>
+        <p>It highlights method call sites that may trigger expensive downstream execution paths
         — deep call chains, nested loops, repository / HTTP-client access, high fan-out — by
         statically composing cached method summaries from the IDE's PSI and indexes.</p>
         <p>Each flagged call gets a severity-colored outline, a cost score in the gutter, and a
@@ -14,6 +19,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.3</b>
+        <ul>
+          <li>Added a show/hide toggle button to the main toolbar (next to Run/Debug),
+              also available in the Tools and editor right-click menus. A lit flame means
+              the heatmap is on; a slashed flame means it is off.</li>
+          <li>While hidden, no cost scores are calculated at all.</li>
+          <li>Expanded the plugin description with the motivation behind it.</li>
+        </ul>
         <b>0.1.2</b>
         <ul>
           <li>Removed the upper IDE-compatibility bound so the plugin installs on
@@ -60,4 +73,18 @@
             id="com.hotpath.heatmap.settings"
             displayName="Hot Path Heatmap"/>
     </extensions>
+
+    <actions>
+        <action
+            id="com.hotpath.heatmap.ToggleHeatmap"
+            class="com.hotpath.heatmap.actions.ToggleHeatmapAction"
+            icon="/icons/heatmap.svg"
+            text="Toggle Hot Path Heatmap"
+            description="Show or hide the hot path heatmap. While hidden, no cost scores are calculated.">
+            <!-- Button in the main header toolbar, next to the Run/Debug controls. -->
+            <add-to-group group-id="MainToolbarRight" anchor="first"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
