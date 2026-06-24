@@ -19,6 +19,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.6</b>
+        <ul>
+          <li>Fixed call sites in TypeScript files being analyzed and painted twice
+              (doubled gutter score and outline). TypeScript is now handled once, via
+              its JavaScript base language.</li>
+        </ul>
         <b>0.1.5</b>
         <ul>
           <li>Added a plugin icon (shown in the Plugins list and on the Marketplace).</li>
@@ -66,11 +72,14 @@
         <externalAnnotator
             language="PHP"
             implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+        <!--
+          Register on JavaScript only. TypeScript (and JSX/TSX) are dialects of JavaScript, so the
+          platform's base-language lookup runs this annotator on .ts/.tsx files too. Registering
+          TypeScript separately as well would run the annotator twice per .ts file, painting every
+          call site (and its gutter score) twice.
+        -->
         <externalAnnotator
             language="JavaScript"
-            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
-        <externalAnnotator
-            language="TypeScript"
             implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
 
         <projectService
