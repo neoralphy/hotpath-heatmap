@@ -38,10 +38,14 @@ class HotPathConfigurable : BoundConfigurable("Hot Path Heatmap") {
                 intTextField(50..10_000).bindIntText(state::maxAnalysisTimePerFileMs)
             }
             row {
-                checkBox("Exclude vendor/").bindSelected(state::excludeVendor)
+                checkBox("Exclude folders marked “Excluded”")
+                    .bindSelected(state::excludeMarkedExcluded)
+                    .comment("Respects the IDE's Mark Directory as → Excluded (e.g. vendor/, node_modules/).")
             }
             row {
-                checkBox("Exclude tests").bindSelected(state::excludeTests)
+                checkBox("Exclude test source folders")
+                    .bindSelected(state::excludeTestSources)
+                    .comment("Respects the IDE's Mark Directory as → Test Sources Root.")
             }
         }
 

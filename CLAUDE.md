@@ -86,7 +86,8 @@ Each term is gated by a settings toggle, so heuristics can be turned off individ
 4. Prefer PSI + indexes over custom parsing.
 5. Cache method-level summaries (`CachedValuesManager`); invalidate via modification tracker.
 6. Hard caps: `maxCallDepth=5`, `maxMethodsVisitedPerCallSite=100`, `maxAnalysisTimePerFileMs=500`.
-7. Skip `vendor/`, tests, and generated/cache dirs by default.
+7. Always skip built-in/library/SDK code; skip IDE-marked **Excluded** and **Test Sources**
+   folders by default (each toggleable). Driven by `ProjectFileIndex`, not path strings.
 8. Only analyze open editor files.
 9. A global enable/disable toggle must always short-circuit everything.
 

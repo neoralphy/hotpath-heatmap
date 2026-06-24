@@ -7,6 +7,7 @@ import com.hotpath.heatmap.model.Severity
 import com.hotpath.heatmap.settings.HotPathSettings
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
+import com.intellij.testFramework.PsiTestUtil
 import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.jetbrains.php.lang.psi.elements.FunctionReference
 import com.jetbrains.php.lang.psi.elements.Method
@@ -49,6 +50,21 @@ class ShowcaseProjectTest : BasePlatformTestCase() {
             if (rel.endsWith("HeatmapShowcaseController.php")) controllerFile = psi
         }
         controller = controllerFile!!
+        // Mark vendor/ as Excluded (the IDE "Mark Directory as → Excluded"), which is what the
+        // plugin now keys off instead of matching path strings.
+        myFixture.findFileInTempDir("vendor")
+            ?.let { PsiTestUtil.addExcludedRoot(myFixture.module, it) }
+    }
+
+    override fun tearDown() {
+        try {
+            if (available) {
+                myFixture.findFileInTempDir("vendor")
+                    ?.let { PsiTestUtil.removeExcludedRoot(myFixture.module, it) }
+            }
+        } finally {
+            super.tearDown()
+        }
     }
 
     private fun traversal(): CallGraphTraversal {
@@ -91,9 +107,9 @@ class ShowcaseProjectTest : BasePlatformTestCase() {
         assertEquals(Severity.VERY_HIGH, severityOf("expectVeryHigh_expensiveServiceInLoop", "generateMonthlyReport"))
     }
 
-    fun `test vendor call is excluded`() {
+    fun `test call into an Excluded folder is skipped`() {
         if (!available) return
-        // Excluded target -> analyzeCallSite returns null -> nothing to highlight.
+        // vendor/ is marked Excluded in setUp -> target is skipped -> nothing to highlight.
         assertNull(severityOf("expectNone_vendorCallExcluded", "findEverythingExpensively"))
     }
 }

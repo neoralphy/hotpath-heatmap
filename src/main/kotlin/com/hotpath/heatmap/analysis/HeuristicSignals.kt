@@ -53,25 +53,4 @@ object HeuristicSignals {
         val c = className?.lowercase(Locale.ROOT) ?: return false
         return keywords.any { c.endsWith(it) }
     }
-
-    /** Path-based exclusion of vendor / generated / cache directories. */
-    fun isVendorPath(path: String?): Boolean {
-        val p = path?.replace('\\', '/')?.lowercase(Locale.ROOT) ?: return false
-        return p.contains("/vendor/") ||
-            p.contains("/node_modules/") ||
-            p.contains("/generated/") ||
-            p.contains("/var/cache/") ||
-            p.contains("/.cache/")
-    }
-
-    /** Path/name-based detection of test code. */
-    fun isTestPath(path: String?): Boolean {
-        val p = path?.replace('\\', '/')?.lowercase(Locale.ROOT) ?: return false
-        return p.contains("/tests/") ||
-            p.contains("/test/") ||
-            p.endsWith("test.php") ||
-            p.endsWith("testcase.php") ||
-            p.contains("/spec/") ||
-            p.endsWith("spec.php")
-    }
 }

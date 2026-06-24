@@ -19,6 +19,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.4</b>
+        <ul>
+          <li>Exclusion now follows the IDE's own directory marks instead of matching path
+              strings: folders marked <b>Excluded</b> and <b>Test Sources Root</b> (via
+              Mark Directory as…) are skipped by default, each toggleable in settings.
+              Built-in/library code is always skipped.</li>
+          <li>Aligned the toolbar flame icon with the Run/Debug controls.</li>
+        </ul>
         <b>0.1.3</b>
         <ul>
           <li>Added a show/hide toggle button to the main toolbar (next to Run/Debug),

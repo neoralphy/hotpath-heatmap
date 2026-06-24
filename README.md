@@ -60,9 +60,11 @@ Build the zip (`./gradlew buildPlugin`), then in PhpStorm:
 ## Performance & scope
 
 Heavy work runs only in the background phase of an `ExternalAnnotator`, debounced by the daemon,
-with hard caps (`maxCallDepth`, `maxMethodsVisitedPerCallSite`, a per-file time budget). Vendor,
-tests, and built-in/library code are excluded by default. See [CLAUDE.md](CLAUDE.md) for the
-architecture and the performance rules.
+with hard caps (`maxCallDepth`, `maxMethodsVisitedPerCallSite`, a per-file time budget).
+Built-in/library code is always skipped, and folders you've marked (via the IDE's
+**Mark Directory as…** menu) as **Excluded** or **Test Sources Root** are skipped by default
+(each toggleable in settings). See [CLAUDE.md](CLAUDE.md) for the architecture and the
+performance rules.
 
 Out of scope (for now): runtime/Xdebug profiling, DB query parsing, framework magic
 (Laravel/Symfony), precise dynamic-dispatch resolution.

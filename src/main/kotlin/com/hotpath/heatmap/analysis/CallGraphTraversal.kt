@@ -179,17 +179,24 @@ class CallGraphTraversal(
     }
 
     /**
-     * True when [callable] should be treated as a leaf rather than traversed: built-ins and
-     * standard-library/SDK stubs and any non-project library file are not real downstream cost, and
-     * vendor/test code is excluded by settings. Skipping these keeps trivial calls from inflating
-     * fan-out and call depth.
+     * True when [callable] should be treated as a leaf rather than traversed. Built-in /
+     * standard-library / SDK stubs and any non-project library file are never real downstream cost
+     * and are *always* skipped. On top of that, folders the user marked via the IDE's
+     * "Mark Directory as…" menu are skipped when the matching setting is on:
+     *  - [HotPathState.excludeTestSources] → folders marked as Test Sources Root;
+     *  - [HotPathState.excludeMarkedExcluded] → folders marked Excluded.
+     * Skipping these keeps trivial calls from inflating fan-out and call depth.
      */
     private fun isExcluded(callable: PsiElement): Boolean {
         val vFile = support.containingFile(callable) ?: return true
-        if (!fileIndex.isInContent(vFile)) return true
-        val path = vFile.path
-        if (settings.excludeVendor && HeuristicSignals.isVendorPath(path)) return true
-        if (settings.excludeTests && HeuristicSignals.isTestPath(path)) return true
+
+        if (settings.excludeTestSources && fileIndex.isInTestSourceContent(vFile)) return true
+        if (settings.excludeMarkedExcluded && fileIndex.isExcluded(vFile)) return true
+
+        // Always skip genuine non-project code (libraries, SDKs, built-in stubs). An Excluded
+        // folder also reports !isInContent, so we let those through here — if the user turned the
+        // exclude-marked setting off above, we still want to traverse them.
+        if (!fileIndex.isInContent(vFile) && !fileIndex.isExcluded(vFile)) return true
         return false
     }
 }
