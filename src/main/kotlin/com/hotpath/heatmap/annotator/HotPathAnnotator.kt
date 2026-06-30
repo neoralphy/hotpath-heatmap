@@ -80,11 +80,12 @@ class HotPathAnnotator :
     override fun apply(file: PsiFile, annotationResult: List<Highlight>, holder: AnnotationHolder) {
         for (highlight in annotationResult) {
             val result = highlight.result
-            val attrs = result.severity.textAttributes() ?: continue
             val tooltip = buildTooltip(result)
+            // No inline marker: the estimate shows only as a colored score badge in the gutter
+            // (which carries its own tooltip), so the code text and any IDE diagnostics on it
+            // are left completely untouched.
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                 .range(highlight.range)
-                .enforcedTextAttributes(attrs)
                 .tooltip(tooltip)
                 .gutterIconRenderer(ScoreGutterIconRenderer(result.score, result.severity, tooltip))
                 .create()

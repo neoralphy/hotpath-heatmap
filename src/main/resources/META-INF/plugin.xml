@@ -19,6 +19,13 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.10</b>
+        <ul>
+          <li>The estimate now shows only as a colored score badge in the editor gutter — the
+              inline marker on the code is gone. With nothing painted on the code text, the
+              gutter number can use an intuitive warm yellow → orange → red heat ramp without
+              ever colliding with IDE warnings or errors.</li>
+        </ul>
         <b>0.1.9</b>
         <ul>
           <li>Call-site marker is now a purple background "heat tint" that deepens as the

@@ -11,7 +11,7 @@ PHP and JavaScript plugins, so both languages are analyzed in the same IDE.
 A line like `$this->billingService->calculate($user)` looks cheap, but `calculate()` may
 fan out through several services, loops, and a repository. The plugin scores each call site
 by recursively composing cached *method summaries* of its downstream call graph and paints
-the call site (purple background heat tint: lavender → deep purple) with a tooltip explaining *why*.
+the call site with a gutter score badge (yellow → orange → red) and a tooltip explaining *why*.
 
 ## Build & run
 

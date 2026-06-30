@@ -19,10 +19,10 @@ Supports **PHP** and **JavaScript / TypeScript** (PhpStorm bundles both language
 
 ## What you see
 
-- The call name gets a **purple background heat tint** that deepens with cost (light lavender → deep purple).
-- The **numeric score** is drawn in the **gutter**, next to the line number.
-- Hovering shows a **tooltip** explaining *why* (loop depth, downstream depth, repository/client
-  findings, fan-out, …).
+- The **numeric score** is drawn in the **gutter**, next to the line number, colored by severity
+  (yellow → orange → red). The code text itself is left untouched.
+- Hovering the score shows a **tooltip** explaining *why* (loop depth, downstream depth,
+  repository/client findings, fan-out, …).
 
 ## Scoring
 
