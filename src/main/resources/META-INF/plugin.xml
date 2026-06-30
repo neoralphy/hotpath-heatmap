@@ -19,6 +19,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.8</b>
+        <ul>
+          <li>Call-site marker is now a full boxed outline, and the palette moved to a cool
+              blue → magenta → purple ramp (no warm yellow/orange/red tones, which read as
+              warnings).</li>
+        </ul>
         <b>0.1.7</b>
         <ul>
           <li>New call-site marker: a dotted underline instead of a solid box, so it no longer
