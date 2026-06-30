@@ -19,6 +19,13 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.9</b>
+        <ul>
+          <li>Call-site marker is now a purple background "heat tint" that deepens as the
+              estimated cost rises — the literal heatmap look. It uses a single purple hue and
+              no underline/box, so it never collides with IDE warnings or errors (which use
+              wavy underlines and yellow/red).</li>
+        </ul>
         <b>0.1.8</b>
         <ul>
           <li>Call-site marker is now a full boxed outline, and the palette moved to a cool
