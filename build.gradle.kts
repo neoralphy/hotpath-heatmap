@@ -60,6 +60,13 @@ intellijPlatform {
             ide(IntelliJPlatformType.IntellijIdeaCommunity, "2024.2.4")
         }
     }
+
+    // `./gw publishPlugin` uploads build/distributions/<version>.zip to the JetBrains Marketplace.
+    // The token is read from the PUBLISH_TOKEN env var (a Marketplace Hub permanent token) so it
+    // never lives in the repo. Get one at https://plugins.jetbrains.com/author/me/tokens.
+    publishing {
+        token = providers.environmentVariable("PUBLISH_TOKEN")
+    }
 }
 
 kotlin {
