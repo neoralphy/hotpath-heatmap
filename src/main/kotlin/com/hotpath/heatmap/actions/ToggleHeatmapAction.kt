@@ -28,12 +28,11 @@ class ToggleHeatmapAction : AnAction() {
         val settings = HotPathSettings.getInstance().state
         settings.enabled = !settings.enabled
         // Repaint open editors now: re-run highlighting (which recomputes when on, clears when off).
-        // restart() is marked deprecated as of 2025.3, but its non-deprecated replacement does not
-        // exist in our 2024.2 compile target, so we keep it — it still works on every supported IDE.
-        @Suppress("DEPRECATION")
+        // restart(requestor) is the non-deprecated form (the no-arg restart() was deprecated in
+        // 2025.3); we pass this action as the requestor.
         for (project in ProjectManager.getInstance().openProjects) {
             if (!project.isDisposed) {
-                DaemonCodeAnalyzer.getInstance(project).restart()
+                DaemonCodeAnalyzer.getInstance(project).restart(this)
             }
         }
     }

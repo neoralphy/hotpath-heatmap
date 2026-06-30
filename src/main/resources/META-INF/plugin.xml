@@ -19,6 +19,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.14</b>
+        <ul>
+          <li>Minimum IDE is now 2025.3. The toggle now uses the non-deprecated daemon-restart
+              API (the old form was deprecated in 2025.3), so the plugin no longer reports a
+              deprecated-API usage on 2025.3+. (If you are on 2024.2–2025.2, stay on 0.1.13.)</li>
+        </ul>
         <b>0.1.13</b>
         <ul>
           <li>Made the "very high" score clearly distinct from "high": "high" is now a definite
