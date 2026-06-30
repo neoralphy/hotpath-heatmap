@@ -81,11 +81,13 @@ class HotPathAnnotator :
         for (highlight in annotationResult) {
             val result = highlight.result
             val tooltip = buildTooltip(result)
-            // No inline marker: the estimate shows only as a colored score badge in the gutter
-            // (which carries its own tooltip), so the code text and any IDE diagnostics on it
-            // are left completely untouched.
+            val attrs = result.severity.textAttributes() ?: continue
+            // INFORMATION keeps this on the lowest highlighting layer, so the straight-underline
+            // marker always yields to any warning/error/typo underline on the same token (shared
+            // "underline slot") instead of doubling up or painting over a diagnostic.
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                 .range(highlight.range)
+                .enforcedTextAttributes(attrs)
                 .tooltip(tooltip)
                 .gutterIconRenderer(ScoreGutterIconRenderer(result.score, result.severity, tooltip))
                 .create()

@@ -19,10 +19,12 @@ Supports **PHP** and **JavaScript / TypeScript** (PhpStorm bundles both language
 
 ## What you see
 
-- The **numeric score** is drawn in the **gutter**, next to the line number, colored by severity
-  (yellow → orange → red). The code text itself is left untouched.
-- Hovering the score shows a **tooltip** explaining *why* (loop depth, downstream depth,
-  repository/client findings, fan-out, …).
+- The call name gets a **bold straight underline**, colored by severity (yellow → orange → red).
+  It sits on the lowest highlighting layer, so any IDE warning/error underline on the same token
+  always takes precedence (ours is suppressed there rather than doubling up).
+- The **numeric score** is drawn in the **gutter**, next to the line number, in the same colors.
+- Hovering shows a **tooltip** explaining *why* (loop depth, downstream depth, repository/client
+  findings, fan-out, …).
 
 ## Scoring
 

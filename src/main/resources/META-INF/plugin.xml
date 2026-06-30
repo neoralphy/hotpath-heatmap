@@ -19,6 +19,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.11</b>
+        <ul>
+          <li>Added back an inline marker: a bold <i>straight</i> underline on the call name
+              (distinct from the wavy underlines IDE diagnostics use), alongside the gutter
+              score. It is emitted on the lowest highlighting layer, so any warning/error on the
+              same token always takes precedence — the marker is suppressed there rather than
+              doubling up or painting over the diagnostic.</li>
+        </ul>
         <b>0.1.10</b>
         <ul>
           <li>The estimate now shows only as a colored score badge in the editor gutter — the

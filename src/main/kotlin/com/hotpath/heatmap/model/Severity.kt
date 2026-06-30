@@ -1,7 +1,10 @@
 package com.hotpath.heatmap.model
 
+import com.intellij.openapi.editor.markup.EffectType
+import com.intellij.openapi.editor.markup.TextAttributes
 import com.intellij.ui.JBColor
 import java.awt.Color
+import java.awt.Font
 
 /**
  * Severity bands for an estimated call-site cost, per the spec:
@@ -14,15 +17,29 @@ enum class Severity(val displayName: String, val minScore: Int) {
     HIGH("high", 9),
     VERY_HIGH("very high", 13);
 
-    /** Whether anything (the gutter score badge) should be drawn at all for this band. */
+    /** Whether anything (inline marker + gutter score badge) should be drawn for this band. */
     val isHighlighted: Boolean get() = this != NONE
 
     /**
-     * Color for the numeric score badge painted in the editor gutter (left of the code, by the
-     * line numbers). The estimate shows only here — no inline marker touches the code text — so
-     * a warm yellow → orange → red heat ramp is safe to use: it lives in the gutter and never
-     * collides with IDE diagnostics, which paint wavy underlines/highlights inline. Tuned to
-     * stay legible against the neutral gutter background in both light and dark themes.
+     * Inline marker for the call name: a bold, *straight* underline colored by severity. A
+     * straight underline is deliberately distinct from the *wavy* underlines IDE diagnostics
+     * use (warnings/errors/typos). It lives in the editor's shared "underline slot", and the
+     * annotation is emitted at [com.intellij.lang.annotation.HighlightSeverity.INFORMATION] —
+     * the lowest layer — so on any token that also carries a warning/error, that diagnostic's
+     * underline wins the slot and ours is suppressed. We therefore never double-underline a
+     * token nor paint over a diagnostic. Only the underline is set; the text is left untouched.
+     */
+    fun textAttributes(): TextAttributes? {
+        val color = gutterForeground() ?: return null
+        return TextAttributes(null, null, color, EffectType.BOLD_LINE_UNDERSCORE, Font.PLAIN)
+    }
+
+    /**
+     * Color shared by the inline underline marker and the numeric score badge painted in the
+     * editor gutter (left of the code, by the line numbers). A warm yellow → orange → red heat
+     * ramp: intuitive as "heat", and on a *straight* underline (plus the gutter) it does not
+     * read as a diagnostic, whose underlines are wavy. Tuned to stay legible against the
+     * neutral gutter background in both light and dark themes.
      */
     fun gutterForeground(): JBColor? = when (this) {
         NONE -> null
