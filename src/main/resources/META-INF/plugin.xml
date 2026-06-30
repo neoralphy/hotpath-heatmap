@@ -19,6 +19,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.13</b>
+        <ul>
+          <li>Made the "very high" score clearly distinct from "high": "high" is now a definite
+              orange and "very high" a pure red, so the top two severity bands no longer look
+              alike.</li>
+        </ul>
         <b>0.1.12</b>
         <ul>
           <li>PHP and JavaScript are now <i>optional</i> dependencies. The plugin installs in any
