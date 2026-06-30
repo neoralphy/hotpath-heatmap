@@ -1,0 +1,20 @@
+<idea-plugin>
+    <!--
+      Loaded only when the JavaScript plugin is present. Wires the language-neutral annotator to
+      JavaScript files and registers the JS LanguageSupport adapter.
+
+      Register on JavaScript only. TypeScript (and JSX/TSX) are dialects of JavaScript, so the
+      platform's base-language lookup runs this annotator on .ts/.tsx files too. Registering
+      TypeScript separately would run the annotator twice per .ts file, painting every call site
+      (and its gutter score) twice.
+    -->
+    <extensions defaultExtensionNs="com.intellij">
+        <externalAnnotator
+            language="JavaScript"
+            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.hotpath.heatmap">
+        <languageSupport implementation="com.hotpath.heatmap.analysis.JsLanguageSupport"/>
+    </extensions>
+</idea-plugin>

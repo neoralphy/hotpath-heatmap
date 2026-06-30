@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "com.hotpath"
-version = "0.1.11"
+version = "0.1.12"
 
 repositories {
     mavenCentral()
@@ -55,6 +55,9 @@ intellijPlatform {
             ide(IntelliJPlatformType.PhpStorm, "2024.2.4")
             // The newer line we now claim compatibility with (downloads ~1 GB on first run).
             ide(IntelliJPlatformType.PhpStorm, "2025.3")
+            // An IDE that bundles neither PHP nor JavaScript: proves the plugin installs there
+            // (both language deps are optional) instead of failing on a missing PHP dependency.
+            ide(IntelliJPlatformType.IntellijIdeaCommunity, "2024.2.4")
         }
     }
 }

@@ -1,0 +1,15 @@
+<idea-plugin>
+    <!--
+      Loaded only when the PHP plugin (com.jetbrains.php) is present. Wires the language-neutral
+      annotator to PHP files and registers the PHP LanguageSupport adapter.
+    -->
+    <extensions defaultExtensionNs="com.intellij">
+        <externalAnnotator
+            language="PHP"
+            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.hotpath.heatmap">
+        <languageSupport implementation="com.hotpath.heatmap.analysis.PhpLanguageSupport"/>
+    </extensions>
+</idea-plugin>

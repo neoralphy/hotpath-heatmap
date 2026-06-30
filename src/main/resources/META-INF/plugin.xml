@@ -19,6 +19,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.12</b>
+        <ul>
+          <li>PHP and JavaScript are now <i>optional</i> dependencies. The plugin installs in any
+              IntelliJ-based IDE (not only PhpStorm) and activates whichever of the two languages
+              is present. This fixes the "binary incompatible — package com.jetbrains.php not
+              found" error reported when verifying against IDEs that don't bundle PHP (e.g.
+              IntelliJ IDEA, WebStorm).</li>
+        </ul>
         <b>0.1.11</b>
         <ul>
           <li>Added back an inline marker: a bold <i>straight</i> underline on the call name
@@ -99,23 +107,25 @@
     ]]></change-notes>
 
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.jetbrains.php</depends>
-    <depends>JavaScript</depends>
+    <!--
+      The PHP and JavaScript integrations are OPTIONAL dependencies. The core cost engine is
+      language-neutral, so the plugin installs in any IntelliJ-based IDE and activates whichever of
+      PHP / JavaScript is actually present (PhpStorm bundles both). Each optional dependency's
+      config file registers that language's external annotator and its LanguageSupport adapter, so
+      the language-specific code (and the PHP/JS PSI it references) is only loaded when that plugin
+      is installed — which is what keeps the plugin binary-compatible with IDEs that lack PHP.
+    -->
+    <depends optional="true" config-file="hotpath-php.xml">com.jetbrains.php</depends>
+    <depends optional="true" config-file="hotpath-js.xml">JavaScript</depends>
+
+    <extensionPoints>
+        <!-- One language adapter per supported language, contributed from the optional deps above. -->
+        <extensionPoint name="languageSupport"
+                        interface="com.hotpath.heatmap.analysis.LanguageSupport"
+                        dynamic="true"/>
+    </extensionPoints>
 
     <extensions defaultExtensionNs="com.intellij">
-        <externalAnnotator
-            language="PHP"
-            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
-        <!--
-          Register on JavaScript only. TypeScript (and JSX/TSX) are dialects of JavaScript, so the
-          platform's base-language lookup runs this annotator on .ts/.tsx files too. Registering
-          TypeScript separately as well would run the annotator twice per .ts file, painting every
-          call site (and its gutter score) twice.
-        -->
-        <externalAnnotator
-            language="JavaScript"
-            implementationClass="com.hotpath.heatmap.annotator.HotPathAnnotator"/>
-
         <projectService
             serviceImplementation="com.hotpath.heatmap.analysis.MethodSummaryService"/>
 

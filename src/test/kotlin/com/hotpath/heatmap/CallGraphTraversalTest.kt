@@ -62,7 +62,7 @@ class CallGraphTraversalTest : BasePlatformTestCase() {
     private fun traversal(): CallGraphTraversal {
         val settings = HotPathSettings.getInstance().state
         val summaryService = project.getService(MethodSummaryService::class.java)
-        return CallGraphTraversal(project, settings, summaryService, PhpLanguageSupport)
+        return CallGraphTraversal(project, settings, summaryService, PhpLanguageSupport())
     }
 
     private fun callRefNamed(file: PsiFile, name: String): FunctionReference =

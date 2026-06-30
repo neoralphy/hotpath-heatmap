@@ -26,7 +26,7 @@ import java.util.Locale
  * …) are treated as loop levels — they are the JS analog of `foreach` and a common source of
  * hidden per-element cost, so code inside their callbacks is counted as being "inside a loop".
  */
-object JsLanguageSupport : LanguageSupport {
+class JsLanguageSupport : LanguageSupport {
 
     /** Array-iteration methods whose callback bodies behave like a loop body. */
     private val ITERATION_METHODS = setOf(

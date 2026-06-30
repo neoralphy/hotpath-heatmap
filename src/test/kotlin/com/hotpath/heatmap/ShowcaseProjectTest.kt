@@ -69,7 +69,7 @@ class ShowcaseProjectTest : BasePlatformTestCase() {
 
     private fun traversal(): CallGraphTraversal {
         val settings = HotPathSettings.getInstance().state
-        return CallGraphTraversal(project, settings, project.getService(MethodSummaryService::class.java), PhpLanguageSupport)
+        return CallGraphTraversal(project, settings, project.getService(MethodSummaryService::class.java), PhpLanguageSupport())
     }
 
     private fun callIn(methodName: String, calleeName: String): FunctionReference {

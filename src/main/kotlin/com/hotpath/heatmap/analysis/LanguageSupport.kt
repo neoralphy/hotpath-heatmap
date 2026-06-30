@@ -1,6 +1,7 @@
 package com.hotpath.heatmap.analysis
 
 import com.hotpath.heatmap.model.MethodSummary
+import com.intellij.openapi.extensions.ExtensionPointName
 import com.intellij.openapi.util.TextRange
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiElement
@@ -40,9 +41,15 @@ interface LanguageSupport {
     fun computeSummary(callable: PsiElement): MethodSummary
 }
 
-/** Picks the [LanguageSupport] for a file. Order doesn't matter; each [handles] is exclusive. */
+/**
+ * Picks the [LanguageSupport] for a file from the registered extensions. Each language adapter
+ * (PHP, JS) is contributed from its own *optional* dependency, so only the adapters whose language
+ * plugin is actually installed are present here — that is what lets the plugin load in IDEs that
+ * bundle only some (or none) of the supported languages. Order doesn't matter; each [handles] is
+ * exclusive.
+ */
 object LanguageSupports {
-    private val all: List<LanguageSupport> = listOf(PhpLanguageSupport, JsLanguageSupport)
+    private val EP_NAME = ExtensionPointName.create<LanguageSupport>("com.hotpath.heatmap.languageSupport")
 
-    fun forFile(file: PsiFile): LanguageSupport? = all.firstOrNull { it.handles(file) }
+    fun forFile(file: PsiFile): LanguageSupport? = EP_NAME.extensionList.firstOrNull { it.handles(file) }
 }

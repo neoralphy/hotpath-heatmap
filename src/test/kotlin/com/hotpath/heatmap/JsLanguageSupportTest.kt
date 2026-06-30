@@ -11,6 +11,8 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 
 class JsLanguageSupportTest : BasePlatformTestCase() {
 
+    private val support = JsLanguageSupport()
+
     private val code = """
         class UserRepository {
             findById(id: number): string { return ''; }
@@ -47,11 +49,11 @@ class JsLanguageSupportTest : BasePlatformTestCase() {
     private fun traversal(): CallGraphTraversal {
         val settings = HotPathSettings.getInstance().state
         val summaryService = project.getService(MethodSummaryService::class.java)
-        return CallGraphTraversal(project, settings, summaryService, JsLanguageSupport)
+        return CallGraphTraversal(project, settings, summaryService, support)
     }
 
     private fun callNamed(file: PsiFile, name: String): PsiElement =
-        JsLanguageSupport.collectCallSites(file).first { JsLanguageSupport.callName(it) == name }
+        support.collectCallSites(file).first { support.callName(it) == name }
 
     private fun severityOf(file: PsiFile, calleeName: String): Severity? =
         traversal().analyzeCallSite(callNamed(file, calleeName), Long.MAX_VALUE)?.severity

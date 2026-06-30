@@ -17,8 +17,12 @@ import com.jetbrains.php.lang.psi.elements.FunctionReference
 import com.jetbrains.php.lang.psi.elements.Method
 import com.jetbrains.php.lang.psi.elements.While
 
-/** [LanguageSupport] for PHP, backed by `com.jetbrains.php` PSI. */
-object PhpLanguageSupport : LanguageSupport {
+/**
+ * [LanguageSupport] for PHP, backed by `com.jetbrains.php` PSI. Registered as a
+ * `com.hotpath.heatmap.languageSupport` extension from the optional PHP dependency, so this class
+ * (and the PHP PSI it references) is only loaded when the PHP plugin is present.
+ */
+class PhpLanguageSupport : LanguageSupport {
 
     override fun handles(file: PsiFile): Boolean = file is PhpFile
 
