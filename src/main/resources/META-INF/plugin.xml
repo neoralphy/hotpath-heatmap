@@ -19,6 +19,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.7</b>
+        <ul>
+          <li>New call-site marker: a dotted underline instead of a solid box, so it no longer
+              reads as an error. The severity ramp now tops out at purple (amber → orange →
+              magenta → purple) rather than an alarming red.</li>
+        </ul>
         <b>0.1.6</b>
         <ul>
           <li>Fixed call sites in TypeScript files being analyzed and painted twice

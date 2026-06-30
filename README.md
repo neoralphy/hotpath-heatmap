@@ -19,7 +19,7 @@ Supports **PHP** and **JavaScript / TypeScript** (PhpStorm bundles both language
 
 ## What you see
 
-- The call name gets a **rounded-box outline**, colored by severity (amber → orange → red).
+- The call name gets a **dotted underline**, colored by severity (amber → orange → magenta → purple).
 - The **numeric score** is drawn in the **gutter**, next to the line number.
 - Hovering shows a **tooltip** explaining *why* (loop depth, downstream depth, repository/client
   findings, fan-out, …).
