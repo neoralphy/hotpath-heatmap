@@ -19,6 +19,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.15</b>
+        <ul>
+          <li>New icon set: refreshed plugin icon and toolbar toggle (on/off) icons.</li>
+        </ul>
         <b>0.1.14</b>
         <ul>
           <li>Minimum IDE is now 2025.3. The toggle now uses the non-deprecated daemon-restart
