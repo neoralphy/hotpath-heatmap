@@ -32,8 +32,12 @@ Supports **PHP** and **JavaScript / TypeScript** (PhpStorm bundles both language
 score = directLoopDepth + downstreamMaxCallDepth + downstreamLoopCount
       + downstreamNestedLoopDepth + fanOut + expensiveOperationRisk
 
-bands: 0-2 none · 3-5 low · 6-8 medium · 9-12 high · 13+ very high
+bands (at the "Low" sensitivity preset): 0-2 none · 3-5 low · 6-8 medium · 9-12 high · 13+ very high
 ```
+
+The score → band cutoffs are set by a **Sensitivity** preset in the settings (Low / Medium / High);
+**Medium is the default**. Higher presets raise every cutoff, so only progressively more expensive
+call sites are flagged.
 
 Signals include nested loops, method calls inside loops, repository/client/gateway-like classes,
 expensive method names (`find`, `save`, `send`, `query`, `dispatch`, …) and known I/O globals

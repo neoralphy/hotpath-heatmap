@@ -19,6 +19,13 @@
     ]]></description>
 
     <change-notes><![CDATA[
+        <b>0.1.16</b>
+        <ul>
+          <li>Added a <b>Sensitivity</b> setting (Low / Medium / High) that controls how expensive a
+              call site must be before it's flagged. Higher presets raise every band cutoff so
+              fewer, only-costlier call sites light up. The previous thresholds are now the "Low"
+              preset; the new default is <b>Medium</b>, so the heatmap is less noisy out of the box.</li>
+        </ul>
         <b>0.1.15</b>
         <ul>
           <li>New icon set: refreshed plugin icon and toolbar toggle (on/off) icons.</li>

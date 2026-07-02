@@ -75,8 +75,12 @@ score = directLoopDepth + downstreamMaxCallDepth + downstreamLoopCount
       + downstreamNestedLoopDepth + fanOut + expensiveOperationRisk
 ```
 
-Severity bands: `0-2 none · 3-5 low · 6-8 medium · 9-12 high · 13+ very high`.
-Each term is gated by a settings toggle, so heuristics can be turned off individually.
+The score → band cutoffs come from a **sensitivity preset** (`model/ThresholdPreset`), chosen in
+settings; the default is `MEDIUM`. `LOW` reproduces the original fixed bands
+(`0-2 none · 3-5 low · 6-8 medium · 9-12 high · 13+ very high`); `MEDIUM` / `HIGH` raise every
+cutoff so fewer, only-costlier call sites light up. `Severity.fromScore(score, preset)` does the
+mapping. Each score *term* is also gated by a settings toggle, so heuristics can be turned off
+individually.
 
 ## Performance rules (do not regress these)
 

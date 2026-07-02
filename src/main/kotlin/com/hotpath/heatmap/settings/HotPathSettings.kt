@@ -1,5 +1,6 @@
 package com.hotpath.heatmap.settings
 
+import com.hotpath.heatmap.model.ThresholdPreset
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.BaseState
 import com.intellij.openapi.components.SimplePersistentStateComponent
@@ -9,6 +10,20 @@ import com.intellij.openapi.components.Storage
 /** Mutable, persisted plugin configuration. */
 class HotPathState : BaseState() {
     var enabled by property(true)
+
+    /**
+     * Sensitivity preset controlling the score cutoffs for each severity band; default MEDIUM.
+     * Persisted by ordinal via [property] (BaseState.enum() is an inline fn built for JVM 21 and
+     * can't be inlined into our JVM 17 target); [thresholdPreset] is the typed accessor.
+     */
+    private var thresholdPresetOrdinal by property(ThresholdPreset.MEDIUM.ordinal)
+
+    var thresholdPreset: ThresholdPreset
+        get() = ThresholdPreset.entries.getOrElse(thresholdPresetOrdinal) { ThresholdPreset.MEDIUM }
+        set(value) {
+            thresholdPresetOrdinal = value.ordinal
+        }
+
     var maxCallDepth by property(5)
     var maxMethodsVisitedPerCallSite by property(100)
     var maxAnalysisTimePerFileMs by property(500)

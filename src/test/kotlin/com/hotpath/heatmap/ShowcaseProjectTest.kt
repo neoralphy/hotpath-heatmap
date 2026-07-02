@@ -4,6 +4,7 @@ import com.hotpath.heatmap.analysis.CallGraphTraversal
 import com.hotpath.heatmap.analysis.MethodSummaryService
 import com.hotpath.heatmap.analysis.PhpLanguageSupport
 import com.hotpath.heatmap.model.Severity
+import com.hotpath.heatmap.model.ThresholdPreset
 import com.hotpath.heatmap.settings.HotPathSettings
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -43,6 +44,8 @@ class ShowcaseProjectTest : BasePlatformTestCase() {
 
     override fun setUp() {
         super.setUp()
+        // Severity assertions here are written against the original (now "Low") thresholds.
+        HotPathSettings.getInstance().state.thresholdPreset = ThresholdPreset.LOW
         if (!available) return
         var controllerFile: PsiFile? = null
         for (rel in FILES) {

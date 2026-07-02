@@ -4,6 +4,7 @@ import com.hotpath.heatmap.analysis.CallGraphTraversal
 import com.hotpath.heatmap.analysis.JsLanguageSupport
 import com.hotpath.heatmap.analysis.MethodSummaryService
 import com.hotpath.heatmap.model.Severity
+import com.hotpath.heatmap.model.ThresholdPreset
 import com.hotpath.heatmap.settings.HotPathSettings
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
@@ -12,6 +13,12 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 class JsLanguageSupportTest : BasePlatformTestCase() {
 
     private val support = JsLanguageSupport()
+
+    override fun setUp() {
+        super.setUp()
+        // These assertions are written against the original (now "Low") thresholds.
+        HotPathSettings.getInstance().state.thresholdPreset = ThresholdPreset.LOW
+    }
 
     private val code = """
         class UserRepository {

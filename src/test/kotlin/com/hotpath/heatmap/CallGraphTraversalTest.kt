@@ -4,6 +4,7 @@ import com.hotpath.heatmap.analysis.CallGraphTraversal
 import com.hotpath.heatmap.analysis.MethodSummaryService
 import com.hotpath.heatmap.analysis.PhpLanguageSupport
 import com.hotpath.heatmap.model.Severity
+import com.hotpath.heatmap.model.ThresholdPreset
 import com.hotpath.heatmap.settings.HotPathSettings
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
@@ -11,6 +12,12 @@ import com.intellij.testFramework.fixtures.BasePlatformTestCase
 import com.jetbrains.php.lang.psi.elements.FunctionReference
 
 class CallGraphTraversalTest : BasePlatformTestCase() {
+
+    override fun setUp() {
+        super.setUp()
+        // These assertions are written against the original (now "Low") thresholds.
+        HotPathSettings.getInstance().state.thresholdPreset = ThresholdPreset.LOW
+    }
 
     private val fixtureCode = """
         <?php

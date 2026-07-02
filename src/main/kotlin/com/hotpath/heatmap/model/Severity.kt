@@ -7,15 +7,15 @@ import java.awt.Color
 import java.awt.Font
 
 /**
- * Severity bands for an estimated call-site cost, per the spec:
- * `0-2 none · 3-5 low · 6-8 medium · 9-12 high · 13+ very high`.
+ * Severity bands for an estimated call-site cost. The score at which each band is reached is not
+ * fixed — it comes from the configured [ThresholdPreset] (see [fromScore]).
  */
-enum class Severity(val displayName: String, val minScore: Int) {
-    NONE("none", 0),
-    LOW("low", 3),
-    MEDIUM("medium", 6),
-    HIGH("high", 9),
-    VERY_HIGH("very high", 13);
+enum class Severity(val displayName: String) {
+    NONE("none"),
+    LOW("low"),
+    MEDIUM("medium"),
+    HIGH("high"),
+    VERY_HIGH("very high");
 
     /** Whether anything (inline marker + gutter score badge) should be drawn for this band. */
     val isHighlighted: Boolean get() = this != NONE
@@ -50,8 +50,13 @@ enum class Severity(val displayName: String, val minScore: Int) {
     }
 
     companion object {
-        /** Maps a raw cost score onto the highest band whose [minScore] it reaches. */
-        fun fromScore(score: Int): Severity =
-            entries.lastOrNull { score >= it.minScore } ?: NONE
+        /** Maps a raw cost score onto the highest band whose cutoff (from [preset]) it reaches. */
+        fun fromScore(score: Int, preset: ThresholdPreset): Severity = when {
+            score >= preset.veryHighCut -> VERY_HIGH
+            score >= preset.highCut -> HIGH
+            score >= preset.mediumCut -> MEDIUM
+            score >= preset.lowCut -> LOW
+            else -> NONE
+        }
     }
 }

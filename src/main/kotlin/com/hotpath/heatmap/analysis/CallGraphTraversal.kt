@@ -73,7 +73,7 @@ class CallGraphTraversal(
             truncated = acc.truncated,
         )
         val score = CostHeuristics.score(breakdown)
-        return CallSiteResult(score, CostHeuristics.severity(score), breakdown)
+        return CallSiteResult(score, CostHeuristics.severity(score, settings.thresholdPreset), breakdown)
     }
 
     private fun traverse(callable: PsiElement, depth: Int, pathLoopDepth: Int, deadlineNanos: Long, acc: Acc) {
@@ -150,7 +150,7 @@ class CallGraphTraversal(
             reasons = reasons,
         )
         val score = CostHeuristics.score(breakdown)
-        return CallSiteResult(score, CostHeuristics.severity(score), breakdown)
+        return CallSiteResult(score, CostHeuristics.severity(score, settings.thresholdPreset), breakdown)
     }
 
     private fun buildReasons(directLoopDepth: Int, acc: Acc): List<String> {

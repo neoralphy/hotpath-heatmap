@@ -2,6 +2,7 @@ package com.hotpath.heatmap.analysis
 
 import com.hotpath.heatmap.model.CostBreakdown
 import com.hotpath.heatmap.model.Severity
+import com.hotpath.heatmap.model.ThresholdPreset
 
 /** Turns a [CostBreakdown] into the spec's additive score and a [Severity] band. */
 object CostHeuristics {
@@ -14,5 +15,5 @@ object CostHeuristics {
             b.fanOut +
             b.expensiveOperationRisk
 
-    fun severity(score: Int): Severity = Severity.fromScore(score)
+    fun severity(score: Int, preset: ThresholdPreset): Severity = Severity.fromScore(score, preset)
 }

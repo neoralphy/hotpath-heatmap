@@ -35,10 +35,13 @@ class ScoreGutterIconRenderer(
     override fun isNavigateAction(): Boolean = false
 
     // GutterIconRenderer requires value-equality so the daemon can diff highlights efficiently.
+    // The tooltip is part of the identity: if only the explanation changes (same score/severity),
+    // the daemon must still swap in the new renderer so the score's tooltip never goes stale.
     override fun equals(other: Any?): Boolean =
-        other is ScoreGutterIconRenderer && other.score == score && other.severity == severity
+        other is ScoreGutterIconRenderer && other.score == score &&
+            other.severity == severity && other.tooltip == tooltip
 
-    override fun hashCode(): Int = score * 31 + severity.ordinal
+    override fun hashCode(): Int = (score * 31 + severity.ordinal) * 31 + tooltip.hashCode()
 
     /** A small right-aligned numeric badge. Width is approximated for monospace digits. */
     private class ScoreIcon(private val text: String, private val color: Color) : Icon {
