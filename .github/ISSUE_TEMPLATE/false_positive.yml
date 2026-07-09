@@ -1,0 +1,51 @@
+name: False positive / wrong score
+description: A call is flagged as expensive (or scored much higher/lower) than it should be.
+labels: [scoring]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Immediate workaround:** you don't have to wait for a fix — click **exclude** in the
+        call's tooltip (or press Alt+Enter → "Not expensive") to stop counting that target as a
+        resource operation everywhere. Reporting it here still helps us fix the default heuristics
+        for everyone.
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      placeholder: 0.6.1
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - PHP
+        - JavaScript / TypeScript
+        - Java
+        - Kotlin
+        - Groovy
+        - Scala
+    validations:
+      required: true
+  - type: textarea
+    id: flagged-call
+    attributes:
+      label: The flagged call and its tooltip
+      description: The line that gets marked, its gutter score, and what the tooltip says (the "why" — detected resource operations, loop context).
+    validations:
+      required: true
+  - type: textarea
+    id: why-wrong
+    attributes:
+      label: Why is the score wrong?
+      description: e.g. "HealthClient::ping is a no-op stub", "this 'save' writes to an in-memory map, not a DB", "this IS a DB call but scored trivial".
+    validations:
+      required: true
+  - type: textarea
+    id: snippet
+    attributes:
+      label: Code snippet of the called method (if possible)
+      description: The downstream method(s) the score is based on. Strip anything confidential.
+      render: text

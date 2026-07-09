@@ -1,0 +1,17 @@
+name: Feature request
+description: An idea that would make the heatmap more useful.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve?
+      description: The situation where the plugin currently doesn't help you (or gets in the way).
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like it to do?
+    validations:
+      required: true
